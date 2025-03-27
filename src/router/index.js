@@ -13,7 +13,6 @@ import TheoDoiMuonSach from "../views/TheoDoiMuonSach.vue";
 import Users from "../views/Users.vue";
 
 const routes = [
-  { path: "/", redirect: "/login" },
   { path: "/login", component: Login },
   { path: "/register", component: Register },
   { path: "/update-book/:id", component: Updatebook },
@@ -27,6 +26,7 @@ const routes = [
     path: "/my-books",
     component: Mybook,
   },
+  { path: "/", redirect: "/login" },
 ];
 
 const router = createRouter({

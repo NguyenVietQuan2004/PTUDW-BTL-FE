@@ -106,7 +106,11 @@ const createMuonSach = async () => {
     ngaytra.value = "";
     searchQuery.value = "";
     isBorrowed.value = false;
-    router.push("/my-books");
+    if (authStore.role === "user") {
+      router.push("/my-books");
+    } else {
+      router.push("/admin");
+    }
   } catch (error) {
     alert(theoDoiMuonSachStore.errorMessage);
   }
@@ -182,11 +186,13 @@ const filteredDocGia = computed(() =>
   max-width: 400px;
   margin: 20px auto;
   padding: 20px;
-  background: #f9f9f9;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   margin-top: 20px;
+
+  border-radius: 5px;
+  text-align: center;
+  border: 1px solid black;
 }
 
 h2 {

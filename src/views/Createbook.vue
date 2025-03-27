@@ -60,7 +60,7 @@ const deleteBook = async (bookId) => {
 
 <template>
   <navigationAdmin />
-  <div style="display: flex; flex-direction: column-reverse; margin-top: 20px">
+  <div style="display: flex; flex-direction: column; margin-top: 20px">
     <div class="form-container">
       <h2>Thêm Sách Mới</h2>
 
@@ -143,10 +143,9 @@ const deleteBook = async (bookId) => {
   width: 400px;
   margin: 20px auto;
   padding: 20px;
-  background: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
   text-align: center;
+  border: 1px solid black;
 }
 
 h2 {
@@ -210,7 +209,6 @@ button:disabled {
   padding: 20px;
   background: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 table {
@@ -226,7 +224,6 @@ td {
 }
 
 th {
-  background: #f4f4f4;
 }
 
 .update-btn {

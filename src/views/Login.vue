@@ -32,13 +32,13 @@ const goToRegister = () => {
   <div class="login-container">
     <h2>Đăng nhập</h2>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label>Chọn vai trò:</label>
       <select v-model="role" @change="authStore.setRole(role)">
         <option value="user">User</option>
         <option value="admin">Admin</option>
       </select>
-    </div>
+    </div> -->
 
     <div class="form-group">
       <input class="input" v-model="email" type="email" placeholder="Email" />
@@ -63,10 +63,9 @@ const goToRegister = () => {
   max-width: 400px;
   margin: 100px auto;
   padding: 20px;
-  background: #f9f9f9;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 100px;
+  margin-top: 200px;
+  border: 1px solid black;
 }
 label {
   text-align: start;
@@ -97,25 +96,33 @@ select {
 button {
   width: 100%;
   padding: 10px;
-  background: #007bff;
-  color: white;
   font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.5s ease;
+  background-color: transparent;
+  border: 1px solid black;
 }
 
 button:hover {
-  background: #0056b3;
+  background-color: black;
+  color: white;
 }
 
 .register-button {
-  margin-top: 10px;
-  background: #28a745;
+  margin-top: 20px;
+  padding: 0;
+  border: none;
+  text-align: start;
+  font-size: 14px;
+  text-decoration: underline;
+  color: blue;
 }
 
 .register-button:hover {
-  background: #218838;
+  background-color: transparent;
+  color: black;
+  opacity: 0.6;
 }
 </style>

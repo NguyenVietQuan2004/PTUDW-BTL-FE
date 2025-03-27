@@ -135,26 +135,31 @@ const traSach = async (recordId) => {
 }
 .btn-danger {
   text-decoration: none;
-  background-image: linear-gradient(to right, #8360c3, #2ebf91);
-  color: white;
   font-size: 14px;
   padding: 10px;
   font-weight: 600;
+  color: white;
+  background-color: #333;
+  border: 1px solid transparent;
 }
 .btn-danger:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  box-sizing: border-box;
 }
 .list {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: start;
 }
 .book-card {
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 15px;
   border: 1px solid black;
-  min-width: 450px;
+  min-width: 400px;
 }
 ul {
   padding: 0;

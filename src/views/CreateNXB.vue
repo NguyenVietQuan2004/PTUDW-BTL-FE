@@ -140,14 +140,16 @@ td {
   gap: 20px;
   justify-content: center;
   margin-top: 20px;
+  padding-bottom: 100px;
 }
 
 .form-container {
   width: 600px;
   padding: 20px;
-  background: #f9f9f9;
-  border-radius: 10px;
   text-align: center;
+  border-radius: 5px;
+  text-align: center;
+  border: 1px solid black;
 }
 
 h2 {

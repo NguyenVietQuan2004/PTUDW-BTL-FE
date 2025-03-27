@@ -48,7 +48,7 @@ const goToLogin = () => {
 
       <button @click="register">Đăng ký</button>
 
-      <button @click="goToLogin" class="login-button">Quay lại Đăng nhập</button>
+      <button @click="goToLogin" class="login-button back">Quay lại Đăng nhập</button>
     </div>
   </div>
 </template>
@@ -58,19 +58,17 @@ const goToLogin = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 100px);
-  background-color: #f4f4f4;
+  height: 100vh;
   box-sizing: border-box;
-  margin-top: 100px;
 }
 
 .register-box {
   background: white;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   width: 400px;
   text-align: center;
+  border: 1px solid black;
 }
 
 h2 {
@@ -91,8 +89,6 @@ input {
 button {
   width: 100%;
   padding: 10px;
-  background: #007bff;
-  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -104,11 +100,34 @@ button:hover {
   background: #0056b3;
 }
 
-.login-button {
-  background: #28a745;
+button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.5s ease;
+  background-color: transparent;
+  border: 1px solid black;
 }
 
-.login-button:hover {
-  background: #218838;
+button:hover {
+  background-color: black;
+  color: white;
+}
+.back {
+  margin-top: 20px;
+  padding: 0;
+  border: none;
+  text-align: start;
+  font-size: 14px;
+  text-decoration: underline;
+  color: blue;
+}
+.back:hover {
+  background-color: transparent;
+  color: black;
+  opacity: 0.6;
 }
 </style>

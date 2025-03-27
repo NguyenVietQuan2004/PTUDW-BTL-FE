@@ -11,6 +11,7 @@ const errorMessage = ref("");
 const successMessage = ref("");
 const searchQuery = ref("");
 const selectedNXB = ref(null);
+console.log(bookStore.books);
 
 onMounted(async () => {
   try {
@@ -108,14 +109,16 @@ const registerBook = async (bookId) => {
       <div class="f-item">
         <span style="font-weight: 600"> Giới thiệu:</span>
         <br />
-        Website Quản Lý Mượn Sách giúp bạn dễ dàng tìm kiếm, đăng ký mượn và theo dõi tình trạng sách. Hệ thống hỗ trợ
-        quản lý sách, người dùng và lịch sử mượn trả một cách hiệu quả. Trải nghiệm ngay để quản lý thư viện thuận tiện
-        hơn!
+        <div style="margin-top: 10px; font-style: italic">
+          Website Quản Lý Mượn Sách giúp bạn dễ dàng tìm kiếm, đăng ký mượn và theo dõi tình trạng sách. Hệ thống hỗ trợ
+          quản lý sách, người dùng và lịch sử mượn trả một cách hiệu quả. Trải nghiệm ngay để quản lý thư viện thuận
+          tiện hơn!
+        </div>
       </div>
       <div class="f-item">
         <span style="font-weight: 600"> Liên hệ:</span>
-        <div>Số điện thoại: 0763948610</div>
-        <div>Email: nguyenvietquan.30032004@gmail.com</div>
+        <div style="margin-top: 10px; font-style: italic">Số điện thoại: 0763948610</div>
+        <div style="font-style: italic">Email: nguyenvietquan.30032004@gmail.com</div>
       </div>
     </div>
   </div>
@@ -202,6 +205,7 @@ h3 {
 .f-item {
   width: 50%;
   padding: 0 80px;
+  font-size: 14px;
 }
 .wrapper {
   display: flex;
