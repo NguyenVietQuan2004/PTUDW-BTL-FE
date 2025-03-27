@@ -56,7 +56,7 @@ const updateBook = async () => {
 
 <template>
   <div class="form-container">
-    <h2>✏️ Cập Nhật Sách</h2>
+    <h2>Cập Nhật Sách</h2>
     <div class="form-group">
       <label>Tên sách:</label>
       <input v-model="tensach" type="text" />
@@ -81,7 +81,7 @@ const updateBook = async () => {
         </option>
       </select>
     </div>
-    <button @click="updateBook">✅ Cập Nhật</button>
+    <button @click="updateBook">Cập Nhật</button>
   </div>
 </template>
 

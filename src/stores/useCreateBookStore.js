@@ -14,7 +14,6 @@ export const useCreateBookStore = defineStore("createBook", {
       try {
         this.isLoading = true;
         const response = await createBook(bookData);
-        console.log(response);
         this.books.push(response.data);
         return response.data;
       } catch (error) {

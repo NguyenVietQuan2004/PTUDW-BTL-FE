@@ -1,13 +1,12 @@
 <script setup>
 import { ref, onMounted, computed, toRaw } from "vue";
 import { useAuthStore } from "../stores/useAuthStore.js";
-
+import navigationAdmin from "../components/navigationAdmin.vue";
 const authStore = useAuthStore();
 const searchQuery = ref("");
 
 onMounted(async () => {
   await authStore.fetchUsers();
-  console.log(toRaw(authStore.users));
 });
 
 const filteredUsers = computed(() => {
@@ -16,9 +15,10 @@ const filteredUsers = computed(() => {
 </script>
 
 <template>
+  <navigationAdmin />
   <div class="container">
-    <h2 class="title">👤 Danh Sách Người Dùng</h2>
-    <input v-model="searchQuery" placeholder="🔍 Tìm kiếm người dùng..." class="search-input" />
+    <h2 class="title">Danh Sách Người Dùng</h2>
+    <input v-model="searchQuery" placeholder="Tìm kiếm người dùng..." class="search-input" />
     <div v-if="filteredUsers.length">
       <ul class="user-list">
         <li v-for="user in filteredUsers" :key="user._id" class="user-item">
@@ -32,13 +32,12 @@ const filteredUsers = computed(() => {
 
 <style scoped>
 .container {
-  max-width: 600px;
   margin: 40px auto;
   padding: 20px;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 100px;
+  margin-top: 20px;
+  padding: 0 200px;
 }
 
 .title {
@@ -61,13 +60,13 @@ const filteredUsers = computed(() => {
   list-style: none;
   padding: 0;
 }
-
+.user-item:hover {
+  background-color: #f8f6f6;
+}
 .user-item {
-  background: #f9f9f9;
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 5px;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .no-users {

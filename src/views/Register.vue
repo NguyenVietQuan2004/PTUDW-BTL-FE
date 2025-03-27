@@ -9,7 +9,7 @@ const authStore = useAuthStore();
 const username = ref("");
 const email = ref("");
 const password = ref("");
-const role = ref("user"); // Luôn là "user"
+const role = ref("user");
 
 const register = async () => {
   if (!username.value || !email.value || !password.value) {
@@ -22,7 +22,7 @@ const register = async () => {
       username: username.value,
       email: email.value,
       password: password.value,
-      role: role.value, // Role luôn là "user"
+      role: role.value,
     });
 
     alert("Đăng ký thành công");
@@ -32,7 +32,6 @@ const register = async () => {
   }
 };
 
-// 🔄 Chuyển đến trang đăng nhập
 const goToLogin = () => {
   router.push("/login");
 };
@@ -43,21 +42,18 @@ const goToLogin = () => {
     <div class="register-box">
       <h2>Đăng ký</h2>
 
-      <!-- ✅ Ẩn role, mặc định là "user" -->
       <input v-model="username" placeholder="Họ và tên" />
       <input v-model="email" type="email" placeholder="Email" />
       <input v-model="password" type="password" placeholder="Mật khẩu" />
 
       <button @click="register">Đăng ký</button>
 
-      <!-- 🌟 Nút quay lại đăng nhập -->
       <button @click="goToLogin" class="login-button">Quay lại Đăng nhập</button>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Tổng thể layout */
 .container {
   display: flex;
   justify-content: center;
@@ -68,7 +64,6 @@ const goToLogin = () => {
   margin-top: 100px;
 }
 
-/* Box đăng ký */
 .register-box {
   background: white;
   padding: 20px;
@@ -78,13 +73,11 @@ const goToLogin = () => {
   text-align: center;
 }
 
-/* Tiêu đề */
 h2 {
   margin-bottom: 20px;
   color: #333;
 }
 
-/* Input */
 input {
   width: 100%;
   padding: 10px;
@@ -95,7 +88,6 @@ input {
   box-sizing: border-box;
 }
 
-/* Nút đăng ký */
 button {
   width: 100%;
   padding: 10px;
@@ -112,7 +104,6 @@ button:hover {
   background: #0056b3;
 }
 
-/* 🌟 Nút quay lại đăng nhập */
 .login-button {
   background: #28a745;
 }

@@ -14,43 +14,43 @@ onMounted(async () => {
   await bookStore.fetchBooks();
   await authStore.fetchUsers();
   await theoDoiMuonSachStore.fetchMuonSach();
-  console.log(toRaw(bookStore.books));
-  console.log(toRaw(authStore.users));
-  console.log(toRaw(theoDoiMuonSachStore.muonSachList));
 });
 const formatDateCustom = (isoString) => {
   if (!isoString) return "Không xác định";
   const date = new Date(isoString);
-  const day = String(date.getDate()).padStart(2, "0"); // Định dạng FG
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Định dạng GG
-  const year = date.getFullYear(); // Định dạng GGGG
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
   return `${day}/${month}/${year}`;
 };
 
 const booksWithBorrowers = computed(() => {
-  return bookStore.books.map((book) => {
-    const nguoiMuon = (theoDoiMuonSachStore.muonSachList || [])
-      .filter((record) => record.masach === book._id)
-      .map((record) => {
-        const user = authStore.users.find((u) => u._id === record.madocgia);
-        return {
-          id: record._id,
-          ten: user ? user.username : "Không xác định",
-          ngayMuon: record.ngaymuon,
-          ngayTra: record.ngaytra,
-        };
-      });
-    return { ...book, nguoiMuon };
-  });
+  return bookStore.books
+    .map((book) => {
+      const nguoiMuon = (theoDoiMuonSachStore.muonSachList || [])
+        .filter((record) => record.masach === book._id)
+        .map((record) => {
+          const user = authStore.users.find((u) => u._id === record.madocgia);
+          return {
+            id: record._id,
+            ten: user ? user.username : "Không xác định",
+            ngayMuon: record.ngaymuon,
+            ngayTra: record.ngaytra,
+          };
+        });
+
+      return { ...book, nguoiMuon };
+    })
+    .filter((book) => book.nguoiMuon.length > 0);
 });
 
 const traSach = async (recordId) => {
   const isConfirmed = window.confirm("Bạn có chắc chắn muốn trả sách này không?");
-  if (!isConfirmed) return; // Nếu chọn "Hủy", thoát khỏi hàm
-
+  if (!isConfirmed) return;
   try {
     await theoDoiMuonSachStore.deleteMuonSach(recordId);
     await theoDoiMuonSachStore.fetchMuonSach();
+    await bookStore.fetchBooks();
   } catch (error) {
     console.error("Lỗi khi trả sách:", error);
   }
@@ -67,30 +67,30 @@ const traSach = async (recordId) => {
   <div class="container">
     <h2 class="title">Quản lý Mượn Sách</h2>
 
-    <div v-if="booksWithBorrowers.length">
+    <div v-if="booksWithBorrowers.length" class="list">
       <div v-for="book in booksWithBorrowers" :key="book._id" class="book-card">
         <h3 class="book-title">Tên sách: {{ book.tensach }}</h3>
         <p class="book-info">Xuất bản: {{ book.namxuatban }}</p>
-        <p class="book-info">Số lượng còn lại: {{ book.soquyen - book.nguoiMuon.length }}</p>
+        <!-- <p class="book-info">Số lượng còn lại: {{ book.soquyen - book.nguoiMuon.length }}</p> -->
+        <p class="book-info">Số lượng còn lại: {{ book.soquyen }}</p>
         <div v-if="book.nguoiMuon.length" class="borrowers">
           <h4 class="borrowers-title">Người đã mượn:</h4>
           <ul>
             <li v-for="user in book.nguoiMuon" :key="user._id" class="borrower-item">
               <span>{{ user.ten }} ({{ formatDateCustom(user.ngayMuon) }} - {{ formatDateCustom(user.ngayTra) }})</span>
-              <button @click="traSach(user.id)" class="btn btn-danger">❌ Trả sách</button>
+              <button @click="traSach(user.id)" class="btn btn-danger">Trả sách</button>
             </li>
           </ul>
         </div>
         <p v-else class="no-borrowers">Chưa có ai mượn sách này.</p>
       </div>
     </div>
-    <p v-else class="no-books">📭 Không có sách nào.</p>
+    <p v-else class="no-books">Không có sách nào.</p>
   </div>
 </template>
 
 <style scoped>
 .container {
-  max-width: 800px;
   margin: 40px auto;
   padding: 20px;
   background: #fff;
@@ -122,7 +122,7 @@ const traSach = async (recordId) => {
   transition: 0.3s ease-in-out;
   background-color: transparent;
   color: rgb(63, 63, 246);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .btn-primary {
@@ -135,23 +135,32 @@ const traSach = async (recordId) => {
 }
 .btn-danger {
   text-decoration: none;
-  background-color: bisque;
+  background-image: linear-gradient(to right, #8360c3, #2ebf91);
+  color: white;
   font-size: 14px;
-  padding: 5px 10px;
+  padding: 10px;
+  font-weight: 600;
 }
 .btn-danger:hover {
 }
-
+.list {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 .book-card {
-  background: #f9f9f9;
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 15px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid black;
+  min-width: 450px;
 }
-
+ul {
+  padding: 0;
+}
 .book-title {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
   color: #333;
 }
@@ -171,13 +180,12 @@ const traSach = async (recordId) => {
   padding: 8px;
   border-radius: 5px;
   margin-top: 5px;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid black;
 }
 
 .no-borrowers,
 .no-books {
   text-align: center;
   color: #777;
-  font-style: italic;
 }
 </style>

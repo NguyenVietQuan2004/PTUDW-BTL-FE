@@ -3,12 +3,14 @@ import { ref, onMounted, computed, watch, toRaw } from "vue";
 import { useTheoDoiMuonSachStore } from "../stores/useTheoDoiMuonSachStore.js";
 import { useCreateBookStore } from "../stores/useCreateBookStore.js";
 import { useAuthStore } from "../stores/useAuthStore.js";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import navigationAdmin from "../components/navigationAdmin.vue";
 
 const theoDoiMuonSachStore = useTheoDoiMuonSachStore();
 const bookStore = useCreateBookStore();
 const authStore = useAuthStore();
 const route = useRoute();
+const router = useRouter();
 
 const masach = ref(route.query.bookId || "");
 const madocgia = ref("");
@@ -16,18 +18,17 @@ const ngaymuon = ref("");
 const ngaytra = ref("");
 const searchQuery = ref("");
 const searchDocGiaQuery = ref("");
-const isBorrowed = ref(false); // Kiểm tra xem sách đã được mượn chưa
+const isBorrowed = ref(false);
 onMounted(async () => {
   await bookStore.fetchBooks();
   await authStore.fetchUsers();
 
   if (authStore.user?.role === "user") {
     madocgia.value = authStore.user.id;
-    await fetchUserBorrowedBooks(); // Lấy danh sách sách đã mượn của user
+    await fetchUserBorrowedBooks();
   }
 });
 
-// Khi người dùng chọn độc giả hoặc sách, kiểm tra trạng thái mượn
 watch([madocgia, masach], async () => {
   if (madocgia.value) {
     await fetchUserBorrowedBooks();
@@ -35,19 +36,27 @@ watch([madocgia, masach], async () => {
   checkIfBookIsBorrowed();
 });
 
-// Lấy danh sách sách đã mượn của user
 const fetchUserBorrowedBooks = async () => {
   if (madocgia.value) {
     await theoDoiMuonSachStore.fetchMuonSachByUser(madocgia.value);
     checkIfBookIsBorrowed();
   }
 };
+onMounted(async () => {
+  await bookStore.fetchBooks();
+  await authStore.fetchUsers();
 
-// Kiểm tra xem sách đã được mượn chưa
+  const today = new Date().toISOString().split("T")[0];
+  ngaymuon.value = today;
+
+  if (authStore.user?.role === "user") {
+    madocgia.value = authStore.user.id;
+    await fetchUserBorrowedBooks();
+  }
+});
+
 const checkIfBookIsBorrowed = () => {
   isBorrowed.value = theoDoiMuonSachStore.userBorrowedBooks.some((borrowedBook) => {
-    console.log(borrowedBook.masach, masach.value);
-
     return borrowedBook.masach === masach.value;
   });
 };
@@ -55,6 +64,26 @@ const checkIfBookIsBorrowed = () => {
 const createMuonSach = async () => {
   if (!madocgia.value || !masach.value || !ngaymuon.value || !ngaytra.value) {
     alert("Vui lòng nhập đầy đủ thông tin!");
+    return;
+  }
+
+  const today = new Date().toISOString().split("T")[0];
+  const maxReturnDate = new Date();
+  maxReturnDate.setDate(maxReturnDate.getDate() + 30);
+  const maxReturnDateString = maxReturnDate.toISOString().split("T")[0];
+
+  if (ngaymuon.value !== today) {
+    alert("Ngày mượn phải là ngày hiện tại!");
+    return;
+  }
+
+  if (ngaytra.value <= today) {
+    alert("Ngày trả phải lớn hơn ngày hiện tại!");
+    return;
+  }
+
+  if (ngaytra.value > maxReturnDateString) {
+    alert("Ngày trả tối đa là 30 ngày kể từ hôm nay!");
     return;
   }
 
@@ -77,23 +106,24 @@ const createMuonSach = async () => {
     ngaytra.value = "";
     searchQuery.value = "";
     isBorrowed.value = false;
+    router.push("/my-books");
   } catch (error) {
     alert(theoDoiMuonSachStore.errorMessage);
   }
 };
 
-// Lọc danh sách sách theo tên
 const filteredBooks = computed(() =>
   bookStore.books.filter((book) => book.tensach.toLowerCase().includes(searchQuery.value.toLowerCase()))
 );
 
-// Lọc danh sách độc giả theo tên
 const filteredDocGia = computed(() =>
   authStore.users.filter((user) => user.username.toLowerCase().includes(searchDocGiaQuery.value.toLowerCase()))
 );
 </script>
 
 <template>
+  <navigationAdmin />
+
   <div class="form-container">
     <h2>Theo Dõi Mượn Sách</h2>
 
@@ -113,13 +143,11 @@ const filteredDocGia = computed(() =>
       </select>
     </div>
 
-    <!-- Ẩn tìm kiếm sách nếu có bookId -->
     <div class="form-group" v-if="!route.query.bookId">
       <label>Tìm sách:</label>
       <input v-model="searchQuery" type="text" placeholder="Nhập tên sách để tìm..." />
     </div>
 
-    <!-- Ẩn select sách nếu có bookId -->
     <div class="form-group" v-if="!route.query.bookId">
       <label>Sách:</label>
       <select v-model="masach">
@@ -158,7 +186,7 @@ const filteredDocGia = computed(() =>
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  margin-top: 100px;
+  margin-top: 20px;
 }
 
 h2 {

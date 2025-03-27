@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useCreatePublisherStore } from "../stores/useCreatePublisherStore.js";
+import navigationAdmin from "../components/navigationAdmin.vue";
 
 const createPublisherStore = useCreatePublisherStore();
 
@@ -21,14 +22,13 @@ const createPublisher = async () => {
     alert("Nhà xuất bản đã được thêm thành công!");
     tennxb.value = "";
     diachi.value = "";
-    createPublisherStore.fetchPublishers(); // Cập nhật danh sách
+    createPublisherStore.fetchPublishers();
   } catch (error) {
     alert(createPublisherStore.errorMessage);
   }
 };
 
 const deletePublisher = async (id) => {
-  console.log(id);
   await createPublisherStore.deletePublisher(id);
   createPublisherStore.fetchPublishers();
 };
@@ -39,6 +39,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <navigationAdmin />
   <div class="container">
     <div class="form-container">
       <h2>Thêm Nhà Xuất Bản</h2>
@@ -86,14 +87,21 @@ onMounted(() => {
 
 <style scoped>
 .publisher-list {
-  width: 600px;
   padding: 20px;
+  width: 100%;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
-
+.form-container {
+  width: 100%;
+}
+.container {
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 0 200px;
+  align-items: center;
+}
 table {
   width: 100%;
   border-collapse: collapse;
@@ -131,15 +139,14 @@ td {
   display: flex;
   gap: 20px;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 20px;
 }
 
 .form-container {
-  width: 400px;
+  width: 600px;
   padding: 20px;
   background: #f9f9f9;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -196,11 +203,9 @@ button:disabled {
 }
 
 .publisher-list {
-  max-width: 400px;
   padding: 20px;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .publisher-list ul {

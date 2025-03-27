@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/theodoimuonsach"; // Thay URL backend của bạn
+const API_URL = "http://localhost:5000/api/theodoimuonsach";
 
 export const createMuonSach = (data) => axios.post(`${API_URL}`, data);
 export const getAllMuonSach = () => axios.get(`${API_URL}`);

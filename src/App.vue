@@ -8,6 +8,4 @@ import Navbar from "./components/Navbar.vue";
   <router-view />
 </template>
 
-<style>
-/* Thêm CSS nếu cần */
-</style>
+<style></style>

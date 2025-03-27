@@ -19,20 +19,15 @@ const logout = () => {
     <ul class="nav-links">
       <li><router-link to="/dashboard">Trang chủ ✨</router-link></li>
 
-      <!-- Nếu là admin thì hiển thị trang quản lý -->
       <li v-if="authStore.user && authStore.role === 'admin'">
         <router-link to="/admin"> Quản lý</router-link>
       </li>
 
-      <!-- Nếu là user thì hiển thị trang sách đã mượn -->
       <li v-if="authStore.user && authStore.role === 'user'">
         <router-link to="/my-books"> Sách của tôi</router-link>
       </li>
-
-      <!-- Nếu chưa đăng nhập thì hiển thị nút đăng nhập -->
     </ul>
 
-    <!-- Nút đăng xuất chỉ hiển thị nếu đã đăng nhập -->
     <button v-if="authStore.user" @click="logout" class="logout-btn">Đăng Xuất</button>
     <button v-if="!authStore.user" class="logout-btn">
       <router-link to="/login" style="color: white; text-decoration: none"> Đăng Nhập</router-link>
@@ -41,22 +36,21 @@ const logout = () => {
 </template>
 
 <style scoped>
-/* Navbar container */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 20px; /* px-5 (5 * 4px) */
+  padding-left: 20px;
   padding-right: 20px;
-  padding-top: 12px; /* py-3 (3 * 4px) */
+  padding-top: 12px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #ddd; /* border-b */
+  border-bottom: 1px solid #ddd;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.75); /* bg-white/75 */
-  backdrop-filter: blur(8px); /* backdrop-blur-lg */
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
   z-index: 20;
 }
 
@@ -67,11 +61,12 @@ const logout = () => {
   font-weight: bold;
 }
 
-/* Navigation links */
 .nav-links {
   list-style: none;
   display: flex;
   gap: 20px;
+  margin-left: auto;
+  margin-right: 30px;
 }
 
 .nav-links li {
@@ -93,7 +88,6 @@ const logout = () => {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Logout button */
 .logout-btn {
   color: white;
 

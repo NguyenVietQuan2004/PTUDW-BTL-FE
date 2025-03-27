@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api"; // Thay URL backend của bạn
+const API_URL = "http://localhost:5000/api";
 
 export const login = async (data, role) => {
   const endpoint = role === "user" ? "/user/login" : "/nhanvien/login";

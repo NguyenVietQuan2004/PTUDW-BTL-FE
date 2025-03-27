@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api"; // Thay URL backend của bạn
+const API_URL = "http://localhost:5000/api";
 
 export const createBook = (bookData) => axios.post(`${API_URL}/sach`, bookData);
 export const getAllBooks = () => axios.get(`${API_URL}/sach`);

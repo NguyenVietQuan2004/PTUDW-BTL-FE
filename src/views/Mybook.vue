@@ -11,14 +11,12 @@ const borrowedBooks = ref([]);
 const errorMessage = ref("");
 const successMessage = ref("");
 
-// 🛠️ Hàm định dạng ngày từ ISO → DD/MM/YYYY
 const formatDate = (isoString) => {
   if (!isoString) return "Không xác định";
   const date = new Date(isoString);
   return date.toLocaleDateString("vi-VN");
 };
 
-// 🛒 Lấy danh sách sách đã mượn của user hiện tại
 const fetchBorrowedBooks = async () => {
   try {
     await theoDoiMuonSachStore.fetchMuonSachByUser(userStore.user?.id);
@@ -29,13 +27,12 @@ const fetchBorrowedBooks = async () => {
   }
 };
 
-// 🔄 Trả sách
 const returnBook = async (recordId) => {
   try {
     await theoDoiMuonSachStore.deleteMuonSach(recordId);
     successMessage.value = "Trả sách thành công!";
     setTimeout(() => (successMessage.value = ""), 3000);
-    fetchBorrowedBooks(); // Cập nhật danh sách sau khi trả sách
+    fetchBorrowedBooks();
   } catch (error) {
     console.error("Lỗi trả sách:", error);
     errorMessage.value = "Không thể trả sách!";
@@ -64,19 +61,17 @@ onMounted(fetchBorrowedBooks);
         </div>
       </div>
     </div>
-    <p v-else class="no-books">📭 Bạn chưa mượn sách nào.</p>
+    <p v-else class="no-books">Bạn chưa mượn sách nào.</p>
     <button @click="router.push('/dashboard')" class="back-button">Quay lại</button>
   </div>
 </template>
 
 <style scoped>
 .my-books-container {
-  max-width: 800px;
   margin: 100px auto 40px;
   padding: 20px;
   background: white;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -103,18 +98,17 @@ onMounted(fetchBorrowedBooks);
 }
 
 .book-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
+  display: flex;
+  gap: 10px;
 }
 
 .book-card {
-  background: #f9f9f9;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   text-align: left;
   transition: transform 0.2s;
+  width: 200px;
 }
 
 .book-card:hover {

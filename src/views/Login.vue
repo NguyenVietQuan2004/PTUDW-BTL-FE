@@ -17,13 +17,12 @@ const login = async () => {
 
   try {
     await authStore.loginUser({ email: email.value, password: password.value });
-    router.push("/dashboard"); // Chuyển hướng sau khi đăng nhập thành công
+    router.push("/dashboard");
   } catch (error) {
     alert(error);
   }
 };
 
-// 🔄 Chuyển đến trang đăng ký
 const goToRegister = () => {
   router.push("/register");
 };
@@ -51,13 +50,11 @@ const goToRegister = () => {
 
     <button @click="login">Đăng nhập</button>
 
-    <!-- 🌟 Nút chuyển đến trang đăng ký -->
     <button @click="goToRegister" class="register-button">Chưa có tài khoản? Đăng ký</button>
   </div>
 </template>
 
 <style scoped>
-/* Định dạng toàn bộ trang đăng nhập */
 .input {
   max-width: 100%;
 }
@@ -75,20 +72,17 @@ label {
   text-align: start;
   margin-right: auto;
 }
-/* Tiêu đề */
 h2 {
   margin-bottom: 20px;
   color: #333;
   text-align: center;
 }
 
-/* Nhóm input */
 .form-group {
   margin-bottom: 15px;
   overflow: hidden;
 }
 
-/* Input và select */
 input,
 select {
   width: 100%;
@@ -100,7 +94,6 @@ select {
   box-sizing: border-box;
 }
 
-/* Nút đăng nhập */
 button {
   width: 100%;
   padding: 10px;
@@ -117,7 +110,6 @@ button:hover {
   background: #0056b3;
 }
 
-/* 🌟 Nút đăng ký */
 .register-button {
   margin-top: 10px;
   background: #28a745;
